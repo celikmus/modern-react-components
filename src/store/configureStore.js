@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({root: () => ''});
 const env = process.env.NODE_ENV;
 export default function configureStore(initialState = {}) {
   let enhancer = applyMiddleware({});
