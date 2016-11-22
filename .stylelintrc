@@ -3,6 +3,7 @@
   'rules': {
     rule-nested-empty-line-before: null,
     declaration-empty-line-before: null,
-    selector-pseudo-element-colon-notation: 'single'
+    selector-pseudo-element-colon-notation: 'single',
+    at-rule-empty-line-before: null    
   }
 }
