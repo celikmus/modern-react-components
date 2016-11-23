@@ -1,0 +1,76 @@
+/* Colors */
+$black: #0a0a0a;
+$grey-darker: #333;
+$grey-dark: #555;
+$grey: #8d8d8f;
+$grey-light: #dcdcdc;
+$grey-lighter: #f5f5f5;
+$white: #fff;
+$red: #f00;
+$green: green;
+$red-darker: darken($red, 20%);
+
+/* Typography */
+$family-sans-serif: OpenSans, "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$size-1: 3em;       // 48px;
+$size-2: 2.5em;     // 40px;
+$size-3: 1.75em;    // 28px;
+$size-4: 1.25em;    // 20px;
+$size-5: 1em;       // 16px;
+$size-6: 0.875em;   // 14px;
+$size-7: 0.75em;    // 12px;
+$size-8: 0.6875em;  // 11px;
+
+/* images */
+$img-dir: '/assets/images/';
+
+/* Breakpoints */
+$tablet: 48.0625em;     // 769px
+$desktop:	61.25em;      // 980px
+$widescreen: 73.75em;   // 1180px
+
+/* Miscelleanous */
+$radius:	0;
+$radius-rounded: 4px;
+$radius-control: 2px;
+$speed: 86ms;
+$easing: ease;
+
+/* Primary colors */
+$primary: $red;
+$light: $grey-lighter;
+$dark: $grey-dark;
+// $info: $blue;
+// $success: $green;
+// $warning: $yellow;
+// $danger: $red;
+
+/* GENERATED VARIABLES */
+
+/* General colors */
+$body-background: $grey-light;
+$background: $grey-lighter;
+$border: $grey;
+$border-hover: $grey-lighter;
+
+/* Text colors */
+$text: $grey-dark;
+$text-light: $grey;
+$text-strong: $grey-darker;
+
+/* Link colors */
+$link: $white;
+$link-hover-background: $grey-dark;
+$link-hover-border: $red;
+$link-active: $grey-darker;
+// $link-visited: $purple;
+// $link-hover: $grey-lighter;
+// $link-active-border: $grey-darker;
+
+/* Typography */
+$family-primary: $family-sans-serif;
+$size-small: $size-7;
+$size-normal: $size-6;
+$size-medium: $size-5;
+$size-large: $size-3;
+$size-huge: $size-1;

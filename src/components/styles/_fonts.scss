@@ -1,0 +1,21 @@
+$font-dir: '/assets/fonts';
+$weight-light: 300;
+$weight-normal: 400;
+$weight-bold: 700;
+
+@mixin font-face($font-family, $weight, $font-url, $font-name) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    src: url($font-url + '/' + $font-name + '.eot');
+    src:
+      url($font-url + '/' + $font-name + '.eot?#iefix') format('embedded-opentype'),
+      url($font-url + '/' + $font-name + '.woff') format('woff'),
+      url($font-url + '/' + $font-name + '.ttf')  format('truetype');
+  }
+}
+
+// santander font
+@include font-face(OpenSans, $weight-light, $font-dir, opensans-light-webfont);
+@include font-face(OpenSans, $weight-normal, $font-dir, opensans-regular-webfont);
+@include font-face(OpenSans, $weight-bold, $font-dir, opensans-bold-webfont);
