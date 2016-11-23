@@ -1,0 +1,31 @@
+@import "../styles/main";
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: transparent;
+  line-height: 1;
+  height: 2em;
+  padding-left: 0.625em;
+  padding-right: 0.625em;
+  border-radius: $radius-rounded;
+  border: none;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+  &.default {
+    width: 4em;
+    color: $white;
+    background-color: $red;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: lighten($red, 20%);
+      color: $grey-lighter;
+    }
+  }
+}
