@@ -1,0 +1,43 @@
+@import "./variables";
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: transparent;
+  line-height: 1;
+  height: 2em; // 32px
+  padding-left: 0.625em; // 10px;
+  padding-right: 0.625em; // 10px;
+  border-radius: $radius-rounded;
+  border: none;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+}
+
+.input {
+  align-items: center;
+  background-color: $white;
+  color: $text;
+  line-height: 1;
+  height: 2em;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  border-radius: $radius-control;
+  border: 1px solid transparent;
+  box-shadow: inset 0 1px 2px rgba(245, 245, 245, 0.5);
+  box-shadow: none;
+  position: relative;
+  &:hover {
+    border-color: $border-hover;
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
