@@ -1,0 +1,22 @@
+@import "../styles/main";
+
+.filtering-select {
+  font-size: 0.75rem;
+  &__control {
+    display: flex;
+  }
+  &__input {
+    @extend .input;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 4em;
+    margin-left: 0.8em;
+    border-radius: $radius-control 0 0 $radius-control;
+  }
+  &__button {
+    @extend .button;
+    border: 1px solid $grey-lighter;
+    border-left: none;
+    border-radius: 0 $radius-control $radius-control 0;
+  }
+}
