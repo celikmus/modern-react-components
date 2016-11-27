@@ -1,0 +1,14 @@
+$elements: content-overlay, menu-underlay, menu-panel, menu, dialog-underlay, dialog, focus;
+
+@function z($element) {
+  $z-index: index($elements, $element);
+  @if $z-index {
+    @return $z-index;
+  }
+  @warn "There is no item '#{$element}' in this list; choose one of: #{$elements}";
+  @return null;
+}
+
+@mixin z-index($element) {
+  z-index: z($element);
+}
