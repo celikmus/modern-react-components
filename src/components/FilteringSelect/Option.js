@@ -16,7 +16,7 @@ const Option = ({item, selectedValue, clickHandler}) => {
 
 Option.propTypes = {
   item: PropTypes.object.isRequired,
-  selectedValue: PropTypes.number,
+  selectedValue: PropTypes.string,
   clickHandler: PropTypes.func.isRequired
 };
 
