@@ -12,6 +12,7 @@
   }
   &__input {
     @extend .input;
+    height: 2.25em;
     flex: 1 1 4em;
     min-width: 4em;
     width: 100%;
@@ -20,6 +21,7 @@
   &__button {
     @extend .button;
     @include z-index(menu);
+    height: 2.25em;
     border: 1px solid $grey-lighter;
     border-left-color: transparent;
     border-radius: 0 $radius-control 0 0;
@@ -44,6 +46,10 @@
       border-bottom-color: transparent;
     }
     &:hover {
+      background-color: $grey-lighter;
+    }
+    &:active,
+    &.selected {
       background-color: $grey-lighter;
     }
   }
