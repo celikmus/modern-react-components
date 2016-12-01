@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import Keys from '../../utils/keys';
 import OutsideClick from '../common/OutsideClick/OutsideClick';
 import Option from './Option';
 import './FilteringSelect.scss';
@@ -11,42 +12,60 @@ class FilteringSelect extends Component {
     this.handleOnClickButton = this.handleOnClickButton.bind(this);
     this.handleChangeOption = this.handleChangeOption.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
     this.state = {
       isOpen: false,
-      selectedOption: null,
+      value: '',
       currentOptions: props.options
     };
   }
   get() {
-    const {selectedOption} = this.state;
-    return selectedOption.label;
+    return this.state.value;
   }
-  set(currency) {
-    const {options} = this.state;
-    const selectedOption = options.filter(opt => opt.label === currency)[0];
-    this.setState({selectedOption});
+  set(value) {
+    this.setState({value});
   }
-  componentWillMount() {
-    const selectedOption = this.props.value &&
-      this.props.options.filter(opt => opt.label === this.props.value)[0];
-    this.setState({selectedOption});
-  }
+
   handleOutsideClick() {
     const {isOpen} = this.state;
     isOpen && this.setState({isOpen: false});
   }
-  handleOnBlur(e) {
+
+  handleOnKeyDown(e) {
     const value = e.target.value;
-    const {currentOptions} = this.state;
-    const selectedOption = currentOptions.filter(opt => opt.label === value)[0];
-    this.setState({isOpen: false, selectedOption});
+    switch (e.keyCode) {
+      case Keys.enter:
+        this.handleChangeOption(value);
+        break;
+      case Keys.esc:
+        this.handleOutsideClick();
+        break;
+      default:
+        break;
+    }
   }
+  handleOnBlur(e) {
+    const isButton = e.target.tagName.toLowerCase() === 'button';
+    if (isButton) {
+      const relatedTarget = e.relatedTarget;
+      relatedTarget && this.handleOutsideClick();
+    } else {
+      const {currentOptions} = this.state;
+      let value = e.target.value;
+      const selectedOption = currentOptions.filter(opt => opt.label === value)[0];
+      if (!selectedOption) {
+        value = this.props.value;
+      }
+      this.setState({value});
+    }
+  }
+
   handleOnChange(e) {
     e.stopPropagation();
+    const value = e.target.value.toUpperCase();
     const {options} = this.props;
-    const value = e.target.value;
     const currentOptions = options.filter(op => op.label.startsWith(value));
-    this.setState({currentOptions});
+    this.setState({currentOptions, isOpen: true, value});
   }
   handleOnClickButton(e) {
     e.stopPropagation();
@@ -54,38 +73,46 @@ class FilteringSelect extends Component {
     this.setState({isOpen: !isOpen});
   }
   handleChangeOption(value) {
-    const {currentOptions} = this.state;
-    const selectedOption = currentOptions.filter(opt => opt.value === value)[0];
-    this.input.value = selectedOption.label;
-    this.setState({selectedOption, isOpen: false});
+    const {name, changeHandler, options} = this.props;
+    changeHandler(name, value);
+    this.setState({value, isOpen: false, currentOptions: options});
   }
   renderMenu() {
-    const {options} = this.props;
-    const {isOpen, selectedOption} = this.state;
+    const {currentOptions} = this.state;
+    const {isOpen, value} = this.state;
     return (
       isOpen && <ul className="filtering-select__menu">
-        {options.map(item => <Option
+        {currentOptions.map(item => <Option
           item={item}
           key={item.value}
-          selectedValue={selectedOption && selectedOption.value}
+          selectedValue={value}
           clickHandler={this.handleChangeOption} />)}
       </ul>
     );
   }
+
+  componentWillReceiveProps(nextProps) {
+    const {value} = this.props;
+    if (value !== nextProps.value) {
+      this.setState({value: nextProps.value});
+    }
+  }
   render() {
-    const {isOpen, selectedOption} = this.state;
-    const value = selectedOption ? selectedOption.label : '';
+    const {isOpen, value} = this.state;
+    const {name} = this.props;
     return (
       <OutsideClick className="filtering-select__outside-click" onClick={this.handleOutsideClick}>
         <div className="filtering-select">
-          <div className="filtering-select__control">
+          <div className="filtering-select__control" onBlur={this.handleOnBlur}>
             <input
               className="filtering-select__input"
-              defaultValue={value}
-              ref={c => (c && (this.input = c))}
+              name={name}
+              value={value}
               onChange={this.handleOnChange}
-              onBlur={this.handleOnBlur} />
-            <button className="filtering-select__button" onClick={this.handleOnClickButton}>
+              onKeyDown={this.handleOnKeyDown} />
+            <button
+              className="filtering-select__button"
+              onClick={this.handleOnClickButton}>
               <i className={`fa fa-caret-${isOpen ? 'up' : 'down'}`}></i>
             </button>
           </div>
@@ -98,7 +125,9 @@ class FilteringSelect extends Component {
 
 FilteringSelect.propTypes = {
   options: PropTypes.array.isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  changeHandler: PropTypes.func.isRequired
 };
 
 export default FilteringSelect;
