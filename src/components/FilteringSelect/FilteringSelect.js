@@ -108,6 +108,7 @@ class FilteringSelect extends Component {
               className="filtering-select__input"
               name={name}
               value={value}
+              autoComplete="off"
               onChange={this.handleOnChange}
               onKeyDown={this.handleOnKeyDown} />
             <button
