@@ -98,8 +98,9 @@ class FilteringSelect extends Component {
     }
   }
   render() {
-    const {isOpen, value} = this.state;
-    const {name} = this.props;
+    const {isOpen, value, currentOptions} = this.state;
+    const {name, placeholder} = this.props;
+    const item = currentOptions.filter(opt => opt.value === value)[0];
     return (
       <OutsideClick className="filtering-select__outside-click" onClick={this.handleOutsideClick}>
         <div className="filtering-select">
@@ -107,7 +108,8 @@ class FilteringSelect extends Component {
             <input
               className="filtering-select__input"
               name={name}
-              value={value}
+              value={item ? item.label : ''}
+              placeholder={placeholder}
               autoComplete="off"
               onChange={this.handleOnChange}
               onKeyDown={this.handleOnKeyDown} />
@@ -128,7 +130,8 @@ FilteringSelect.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
-  changeHandler: PropTypes.func.isRequired
+  changeHandler: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 };
 
 export default FilteringSelect;

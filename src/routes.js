@@ -13,7 +13,7 @@ export default (
         <FilteringSelect
           name="test"
           options={filteringSelectOptions}
-          changeHandler={() => {}} />
+          changeHandler={(name, val) => { console.log(`${name} control value: ${val}`); }} />
         )}key="2" />
   </Route>
 );
