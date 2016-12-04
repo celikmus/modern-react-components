@@ -108,7 +108,7 @@ class FilteringSelect extends Component {
             <input
               className="filtering-select__input"
               name={name}
-              value={item ? item.label : ''}
+              value={item ? item.label : (value || '')}
               placeholder={placeholder}
               autoComplete="off"
               onChange={this.handleOnChange}
