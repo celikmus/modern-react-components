@@ -47,6 +47,9 @@ class FilteringSelect extends Component {
       case Keys.down:
         this.navigateDown(e.target);
         break;
+      case Keys.up:
+        this.navigateUp(e.target);
+        break;
       default:
         break;
     }
@@ -73,6 +76,18 @@ class FilteringSelect extends Component {
       });
     } else if (ref.tagName.toLowerCase() === 'li') {
       ref.nextSibling && ref.nextSibling.focus();
+    }
+  }
+
+  navigateUp(ref) {
+    if (ref.tagName.toLowerCase() === 'input') {
+      this.setState({isOpen: false});
+    } else if (ref.tagName.toLowerCase() === 'li') {
+      if (ref.previousSibling) {
+        ref.previousSibling.focus();
+      } else {
+        this.input && this.input.focus();
+      }
     }
   }
 
@@ -142,6 +157,7 @@ class FilteringSelect extends Component {
             <input
               className="filtering-select__input"
               name={name}
+              ref={c => { if (c) { this.input = c; } }}
               value={item ? item.label : (value || '')}
               placeholder={placeholder}
               autoComplete="off"
