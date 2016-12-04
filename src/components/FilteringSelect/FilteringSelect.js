@@ -35,10 +35,13 @@ class FilteringSelect extends Component {
     const {isOpen} = this.state;
     switch (e.keyCode) {
       case Keys.enter:
+        const target = e.target;
         if (isOpen) {
-          this.handleKeyEnter(e.target);
+          this.handleKeyEnter(target);
         } else {
-          this.setState({isOpen: true});
+          this.setState({isOpen: true}, () => {
+            this.handleKeyEnter(target);
+          });
         }
         break;
       case Keys.esc:
@@ -57,7 +60,15 @@ class FilteringSelect extends Component {
 
   handleKeyEnter(ref) {
     const tagName = ref.tagName.toLowerCase();
+    const {isOpen} = this.state;
     switch (tagName) {
+      case 'button':
+        if (isOpen) {
+          this.setState({isOpen: false});
+        } else {
+          this.handleChangeOption(ref.value);
+        }
+        break;
       case 'input':
         this.handleChangeOption(ref.value);
         break;
@@ -70,12 +81,17 @@ class FilteringSelect extends Component {
   }
 
   navigateDown(ref) {
-    if (ref.tagName.toLowerCase() === 'input') {
-      this.setState({isOpen: true}, () => {
+    const tagName = ref.tagName.toLowerCase();
+    switch (tagName) {
+      case 'button':
+      case 'input':
         this.menu.firstChild.focus();
-      });
-    } else if (ref.tagName.toLowerCase() === 'li') {
-      ref.nextSibling && ref.nextSibling.focus();
+        break;
+      case 'li':
+        ref.nextSibling && ref.nextSibling.focus();
+        break;
+      default:
+        break;
     }
   }
 
@@ -95,7 +111,8 @@ class FilteringSelect extends Component {
     const isButton = e.target.tagName.toLowerCase() === 'button';
     if (isButton) {
       const relatedTarget = e.relatedTarget;
-      relatedTarget && this.handleOutsideClick();
+      const isBlurringOut = relatedTarget && relatedTarget.className !== 'filtering-select__option';
+      isBlurringOut && this.handleOutsideClick();
     } else {
       const {currentOptions} = this.state;
       let value = e.target.value;
