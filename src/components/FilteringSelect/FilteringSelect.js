@@ -33,9 +33,14 @@ class FilteringSelect extends Component {
 
   handleOnKeyDown(e) {
     const value = e.target.value;
+    const {isOpen} = this.state;
     switch (e.keyCode) {
       case Keys.enter:
-        this.handleChangeOption(value);
+        if (isOpen) {
+          this.handleChangeOption(value);
+        } else {
+          this.setState({isOpen: true});
+        }
         break;
       case Keys.esc:
         this.handleOutsideClick();
@@ -44,6 +49,7 @@ class FilteringSelect extends Component {
         break;
     }
   }
+
   handleOnBlur(e) {
     const isButton = e.target.tagName.toLowerCase() === 'button';
     if (isButton) {
