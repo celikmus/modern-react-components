@@ -8,8 +8,10 @@ const Option = ({item, selectedValue, clickHandler}) => {
   };
   return (
     <li
+      tabIndex="0"
       onClick={handleOnClick}
-      className={className}>
+      className={className}
+      value={item.value}>
       {item.label}
     </li>);
 };

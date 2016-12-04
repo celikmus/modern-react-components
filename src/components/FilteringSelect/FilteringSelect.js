@@ -32,12 +32,11 @@ class FilteringSelect extends Component {
   }
 
   handleOnKeyDown(e) {
-    const value = e.target.value;
     const {isOpen} = this.state;
     switch (e.keyCode) {
       case Keys.enter:
         if (isOpen) {
-          this.handleChangeOption(value);
+          this.handleKeyEnter(e.target);
         } else {
           this.setState({isOpen: true});
         }
@@ -45,8 +44,35 @@ class FilteringSelect extends Component {
       case Keys.esc:
         this.handleOutsideClick();
         break;
+      case Keys.down:
+        this.navigateDown(e.target);
+        break;
       default:
         break;
+    }
+  }
+
+  handleKeyEnter(ref) {
+    const tagName = ref.tagName.toLowerCase();
+    switch (tagName) {
+      case 'input':
+        this.handleChangeOption(ref.value);
+        break;
+      case 'li':
+        this.handleChangeOption(ref.getAttribute('value'));
+        break;
+      default:
+        break;
+    }
+  }
+
+  navigateDown(ref) {
+    if (ref.tagName.toLowerCase() === 'input') {
+      this.setState({isOpen: true}, () => {
+        this.menu.firstChild.focus();
+      });
+    } else if (ref.tagName.toLowerCase() === 'li') {
+      ref.nextSibling && ref.nextSibling.focus();
     }
   }
 
@@ -87,7 +113,9 @@ class FilteringSelect extends Component {
     const {currentOptions} = this.state;
     const {isOpen, value} = this.state;
     return (
-      isOpen && <ul className="filtering-select__menu">
+      isOpen && <ul
+        ref={c => { if (c) { this.menu = c; } }}
+        className="filtering-select__menu">
         {currentOptions.map(item => <Option
           item={item}
           key={item.value}
@@ -109,16 +137,15 @@ class FilteringSelect extends Component {
     const item = currentOptions.filter(opt => opt.value === value)[0];
     return (
       <OutsideClick className="filtering-select__outside-click" onClick={this.handleOutsideClick}>
-        <div className="filtering-select">
-          <div className="filtering-select__control" onBlur={this.handleOnBlur}>
+        <div className="filtering-select" onKeyDown={this.handleOnKeyDown} >
+          <div className="filtering-select__control" onBlur={this.handleOnBlur} >
             <input
               className="filtering-select__input"
               name={name}
               value={item ? item.label : (value || '')}
               placeholder={placeholder}
               autoComplete="off"
-              onChange={this.handleOnChange}
-              onKeyDown={this.handleOnKeyDown} />
+              onChange={this.handleOnChange} />
             <button
               className="filtering-select__button"
               onClick={this.handleOnClickButton}>
