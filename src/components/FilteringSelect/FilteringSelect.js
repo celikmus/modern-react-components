@@ -47,33 +47,16 @@ class FilteringSelect extends Component {
       case Keys.esc:
         this.handleOutsideClick();
         break;
-      case Keys.down:
-        this.navigateDown(e.target);
-        break;
       case Keys.up:
+        e.preventDefault();
         this.navigateUp(e.target);
         break;
-      default:
+      case Keys.down:
+        e.preventDefault();
+        this.navigateDown(e.target);
         break;
-    }
-  }
-
-  handleKeyEnter(ref) {
-    const tagName = ref.tagName.toLowerCase();
-    const {isOpen} = this.state;
-    switch (tagName) {
-      case 'button':
-        if (isOpen) {
-          this.setState({isOpen: false});
-        } else {
-          this.handleChangeOption(ref.value);
-        }
-        break;
-      case 'input':
-        this.handleChangeOption(ref.value);
-        break;
-      case 'li':
-        this.handleChangeOption(ref.getAttribute('value'));
+      case Keys.tab:
+        this.setState({isOpen: false});
         break;
       default:
         break;
@@ -104,6 +87,28 @@ class FilteringSelect extends Component {
       } else {
         this.input && this.input.focus();
       }
+    }
+  }
+
+  handleKeyEnter(ref) {
+    const tagName = ref.tagName.toLowerCase();
+    const {isOpen} = this.state;
+    switch (tagName) {
+      case 'button':
+        if (isOpen) {
+          this.setState({isOpen: false});
+        } else {
+          this.handleChangeOption(ref.value);
+        }
+        break;
+      case 'input':
+        this.handleChangeOption(ref.value);
+        break;
+      case 'li':
+        this.handleChangeOption(ref.getAttribute('value'));
+        break;
+      default:
+        break;
     }
   }
 
@@ -138,8 +143,11 @@ class FilteringSelect extends Component {
   }
   handleChangeOption(value) {
     const {name, changeHandler, options} = this.props;
-    changeHandler(name, value);
-    this.setState({value, isOpen: false, currentOptions: options});
+    const {value: stateValue} = this.state;
+    if (value !== stateValue) {
+      changeHandler(name, value);
+      this.setState({value, isOpen: false, currentOptions: options});
+    }
   }
   renderMenu() {
     const {currentOptions} = this.state;
