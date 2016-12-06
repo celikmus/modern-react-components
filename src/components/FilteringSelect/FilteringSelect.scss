@@ -17,6 +17,9 @@
     min-width: 4em;
     width: 100%;
     border-radius: $radius-control 0 0 $radius-control;
+    .invalid & {
+      border-right: none;
+    }
   }
   &__button {
     @extend .button;
@@ -26,6 +29,9 @@
     border-left-color: transparent;
     border-radius: 0 $radius-control 0 0;
     position: relative;
+    .invalid & {
+      border-color: $red;
+    }
   }
   &__menu {
     @include z-index(menu-panel);
