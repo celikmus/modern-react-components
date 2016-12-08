@@ -15,7 +15,6 @@ class FilteringSelect extends Component {
     this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
     this.state = {
       isOpen: false,
-      value: '',
       currentOptions: props.options
     };
   }
@@ -166,7 +165,7 @@ class FilteringSelect extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {value} = this.props;
+    const {value} = this.state;
     if (value !== nextProps.value) {
       this.setState({value: nextProps.value});
     }
