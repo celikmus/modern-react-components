@@ -31,7 +31,7 @@ class FilteringSelect extends Component {
   }
 
   handleOnKeyDown(e) {
-    const {isOpen} = this.state;
+    const {isOpen, currentOptions} = this.state;
     switch (e.keyCode) {
       case Keys.enter:
         const target = e.target;
@@ -56,6 +56,14 @@ class FilteringSelect extends Component {
         break;
       case Keys.tab:
         this.setState({isOpen: false});
+        const {tagName, value} = e.target;
+        if (tagName.toLowerCase() === 'input') {
+          const {name, changeHandler} = this.props;
+          const selectedOption = currentOptions.filter(opt => opt.label === value)[0];
+          if (selectedOption) {
+            changeHandler(name, value);
+          }
+        }
         break;
       default:
         break;
@@ -91,7 +99,7 @@ class FilteringSelect extends Component {
 
   handleKeyEnter(ref) {
     const tagName = ref.tagName.toLowerCase();
-    const {isOpen} = this.state;
+    const {isOpen, currentOptions} = this.state;
     switch (tagName) {
       case 'button':
         if (isOpen) {
@@ -101,7 +109,11 @@ class FilteringSelect extends Component {
         }
         break;
       case 'input':
-        this.handleChangeOption(ref.value);
+        const {name, changeHandler} = this.props;
+        const selectedOption = currentOptions.filter(opt => opt.label === ref.value)[0];
+        if (selectedOption) {
+          changeHandler(name, ref.value);
+        }
         break;
       case 'li':
         this.handleChangeOption(ref.getAttribute('value'));
