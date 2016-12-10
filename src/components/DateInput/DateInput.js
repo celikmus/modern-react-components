@@ -42,7 +42,7 @@ class DateInput extends Component {
           name={name}
           ref={c => { if (c) { this.input = c; } }}
           className="date-input__input"
-          placeholder="yyyy"
+          placeholder="dd/mm/yyyy"
           value={value}
           disabled={disabled}
           onFocus={this.handleOnFocus}
