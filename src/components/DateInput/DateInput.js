@@ -1,6 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import './DateInput.scss';
 
+const setTwoDigits = number => {
+  const num = number / 1;
+  const result = number < 10 ? `0${num}` : num;
+  return result;
+};
+
 class DateInput extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +21,7 @@ class DateInput extends Component {
   }
 
   handleOnFocus() {
-    this.setState({value: ''});
+
   }
 
   handleOnChange(e) {
@@ -31,9 +37,18 @@ class DateInput extends Component {
     }
   }
 
+  formatDate(isoDate) {
+    const date = new Date(isoDate);
+    const day = setTwoDigits(date.getDate());
+    const month = setTwoDigits(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   render() {
     const {name, id, disabled} = this.props;
     const {value} = this.state;
+    const formattedValue = this.formatDate(value);
     return (
       <div
         className="date-input">
@@ -43,7 +58,7 @@ class DateInput extends Component {
           ref={c => { if (c) { this.input = c; } }}
           className="date-input__input"
           placeholder="dd/mm/yyyy"
-          value={value}
+          value={formattedValue}
           disabled={disabled}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
