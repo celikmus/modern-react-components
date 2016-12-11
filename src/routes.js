@@ -17,6 +17,12 @@ export default (
           changeHandler={(name, val) => { console.log(`${name} control value: ${val}`); }} />
         )}
       key="2" />
-    <Route path="dateInput" component={() => (<DateInput name="testDate" />)} key="3" />
+    <Route
+      path="dateInput" key="3" component={() => {
+        const date = (new Date('2016', '11', '12')).toISOString();
+        return (
+          <DateInput value={date} name="testDate" />
+        );
+      }} />
   </Route>
 );
