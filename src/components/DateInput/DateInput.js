@@ -20,14 +20,29 @@ class DateInput extends Component {
 
   }
 
-  handleOnFocus() {
+  handleOnFocus(e) {
 
   }
 
   handleOnChange(e) {
     e.stopPropagation();
-    const value = e.target.value;
-    this.setState({value});
+    const caretPosition = e.target.selectionStart;
+    switch (caretPosition) {
+      case 2:
+      case 5:
+        e.preventDefault();
+        // const sel = window.getSelection();
+        // const range = document.createRange();
+        // sel.removeAllRanges();
+        // range.setStart(e.target, 0);
+        // range.setEnd(e.target, 0);
+        // range.collapse();
+        // sel.addRange(range);
+        break;
+      default:
+        break;
+    }
+    this.setState({value: e.target.value});
   }
 
   componentWillReceiveProps(nextProps) {
