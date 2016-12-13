@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import Keys from '../../utils/keys';
 import './DateInput.scss';
 
 const setTwoDigits = number => {
@@ -13,7 +14,10 @@ class DateInput extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
-    this.state = {value: props.value};
+    this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
+    this.state = {
+      value: this.formatDate(props.value)
+    };
   }
 
   handleOnBlur() {
@@ -31,7 +35,9 @@ class DateInput extends Component {
       case 2:
       case 5:
         e.preventDefault();
-        // const sel = window.getSelection();
+        const sel = window.getSelection(e.target);
+        const selStart = sel.selectionStart;
+        debugger;
         // const range = document.createRange();
         // sel.removeAllRanges();
         // range.setStart(e.target, 0);
@@ -42,14 +48,49 @@ class DateInput extends Component {
       default:
         break;
     }
-    this.setState({value: e.target.value});
+    // this.setState({value: e.target.value});
+  }
+
+  handleOnKeyDown(e) {
+    const selStart = e.target.selectionStart;
+    const selEnd = e.target.selectionEnd;
+    console.log(`selStart: ${selStart}`);
+    console.log(`selEnd: ${selEnd}`);
+    switch (e.keyCode) {
+      case Keys.enter:
+        break;
+      case Keys.esc:
+        break;
+      case Keys.up:
+      case Keys.down:
+      case Keys.tab:
+        break;
+      case Keys.space:
+        e.preventDefault();
+        break;
+      case Keys.backspace:
+        if ((selStart === 3) || (selStart === 6)) {
+          e.preventDefault();
+        }
+        if (selStart < 3) {
+          const {value: stateValue} = this.state;
+          const value = `${stateValue.substring(0, selStart - 1)}d${stateValue.substring(selStart, stateValue.length)}`;
+          this.setState({value});
+        }
+        break;
+      case Keys.forwardSlash:
+        e.preventDefault();
+        break;
+      default:
+        break;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const {value} = this.props;
-    if (nextProps.value !== value) {
-      this.setState({value: nextProps.value});
-    }
+    // const {value} = this.props;
+    // if (nextProps.value !== value) {
+    //   // this.setState({value: nextProps.value});
+    // }
   }
 
   formatDate(isoDate) {
@@ -63,7 +104,6 @@ class DateInput extends Component {
   render() {
     const {name, id, disabled} = this.props;
     const {value} = this.state;
-    const formattedValue = this.formatDate(value);
     return (
       <div
         className="date-input">
@@ -73,10 +113,11 @@ class DateInput extends Component {
           ref={c => { if (c) { this.input = c; } }}
           className="date-input__input"
           placeholder="dd/mm/yyyy"
-          value={formattedValue}
+          value={value}
           disabled={disabled}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
+          onKeyDown={this.handleOnKeyDown}
           onChange={this.handleOnChange} />
         <button className="date-input__calendar-button" disabled={disabled}>
           <i className="fa fa-calendar"></i>
