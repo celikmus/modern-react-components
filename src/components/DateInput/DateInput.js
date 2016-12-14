@@ -72,10 +72,13 @@ class DateInput extends Component {
         if ((selStart === 3) || (selStart === 6)) {
           e.preventDefault();
         }
+        const {value: stateValue} = this.state;
         if (selStart < 3) {
-          const {value: stateValue} = this.state;
-          const value = `${stateValue.substring(0, selStart - 1)}d${stateValue.substring(selStart, stateValue.length)}`;
-          this.setState({value});
+          const valueDay = `${stateValue.substring(0, selStart - 1)}d${stateValue.substring(selStart, stateValue.length)}`;
+          this.setState({value: valueDay});
+        } else if (selStart < 6) {
+          const valueMonth = `${stateValue.substring(0, selStart - 1)}m${stateValue.substring(selStart, stateValue.length)}`;
+          this.setState({value: valueMonth});
         }
         break;
       case Keys.forwardSlash:
