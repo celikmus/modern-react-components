@@ -21,7 +21,10 @@ export default (
       path="dateInput" key="3" component={() => {
         const date = (new Date('2016', '11', '12')).toISOString();
         return (
-          <DateInput value={date} name="testDate" />
+          <DateInput
+            value={date}
+            name="testDate"
+            changeHandler={val => { console.log(`testDate value: ${val}`); }} />
         );
       }} />
   </Route>

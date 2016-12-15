@@ -14,10 +14,6 @@ class DateInput extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
-    this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
-    this.state = {
-      value: this.formatDate(props.value)
-    };
   }
 
   handleOnBlur() {
@@ -30,67 +26,15 @@ class DateInput extends Component {
 
   handleOnChange(e) {
     e.stopPropagation();
-    const caretPosition = e.target.selectionStart;
-    switch (caretPosition) {
-      case 2:
-      case 5:
-        e.preventDefault();
-        const sel = window.getSelection(e.target);
-        const selStart = sel.selectionStart;
-        debugger;
-        // const range = document.createRange();
-        // sel.removeAllRanges();
-        // range.setStart(e.target, 0);
-        // range.setEnd(e.target, 0);
-        // range.collapse();
-        // sel.addRange(range);
-        break;
-      default:
-        break;
+    const {changeHandler} = this.props;
+    const datePattern = /^\d{2}[/-]\d{2}[/-]\d{4}/;
+    const value = datePattern.exec(e.target.value);
+    if (value) {
+      const isoDate = (new Date(value)).toISOString();
+      changeHandler(isoDate);
     }
-    // this.setState({value: e.target.value});
   }
 
-  handleOnKeyDown(e) {
-    const selStart = e.target.selectionStart;
-    const selEnd = e.target.selectionEnd;
-    console.log(`selStart: ${selStart}`);
-    console.log(`selEnd: ${selEnd}`);
-    switch (e.keyCode) {
-      case Keys.enter:
-        break;
-      case Keys.esc:
-        break;
-      case Keys.up:
-      case Keys.down:
-      case Keys.tab:
-        break;
-      case Keys.space:
-        e.preventDefault();
-        break;
-      case Keys.backspace:
-        if ((selStart === 3) || (selStart === 6)) {
-          e.preventDefault();
-        }
-        const {value: stateValue} = this.state;
-        if (selStart < 3) {
-          const valueDay = `${stateValue.substring(0, selStart - 1)}d${stateValue.substring(selStart, stateValue.length)}`;
-          this.setState({value: valueDay});
-        } else if (selStart < 6) {
-          const valueMonth = `${stateValue.substring(0, selStart - 1)}m${stateValue.substring(selStart, stateValue.length)}`;
-          this.setState({value: valueMonth});
-        } else {
-          const valueMonth = `${stateValue.substring(0, selStart - 1)}y${stateValue.substring(selStart, stateValue.length)}`;
-          this.setState({value: valueMonth});
-        }
-        break;
-      case Keys.forwardSlash:
-        e.preventDefault();
-        break;
-      default:
-        break;
-    }
-  }
 
   componentWillReceiveProps(nextProps) {
     // const {value} = this.props;
@@ -108,8 +52,8 @@ class DateInput extends Component {
   }
 
   render() {
-    const {name, id, disabled} = this.props;
-    const {value} = this.state;
+    const {name, id, disabled, value} = this.props;
+    const formattedValue = value && this.formatDate(value);
     return (
       <div
         className="date-input">
@@ -119,11 +63,10 @@ class DateInput extends Component {
           ref={c => { if (c) { this.input = c; } }}
           className="date-input__input"
           placeholder="dd/mm/yyyy"
-          value={value}
+          defaultValue={formattedValue}
           disabled={disabled}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
-          onKeyDown={this.handleOnKeyDown}
           onChange={this.handleOnChange} />
         <button className="date-input__calendar-button" disabled={disabled}>
           <i className="fa fa-calendar"></i>
@@ -137,7 +80,8 @@ DateInput.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   disabled: PropTypes.bool,
-  id: PropTypes.string
+  id: PropTypes.string,
+  changeHandler: PropTypes.func.isRequired
 };
 
 export default DateInput;
