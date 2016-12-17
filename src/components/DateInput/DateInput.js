@@ -24,14 +24,22 @@ class DateInput extends Component {
 
   }
 
+  isSeparator(value, i) {
+    const isSeparator = (value.length === i) && (value[i - 1] !== '/');
+    return isSeparator;
+  }
+
   handleOnChange(e) {
     e.stopPropagation();
     const {changeHandler} = this.props;
     const datePattern = /^\d{2}[/-]\d{2}[/-]\d{4}/;
-    const value = datePattern.exec(e.target.value);
+    const targetValue = e.target.value;
+    const value = datePattern.exec(targetValue);
     if (value) {
       const isoDate = (new Date(value)).toISOString();
       changeHandler(isoDate);
+    } else if (this.isSeparator(targetValue, 2) || this.isSeparator(targetValue, 5)) {
+      e.target.value += '/';
     }
   }
 
