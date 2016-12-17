@@ -35,11 +35,14 @@ class DateInput extends Component {
     const datePattern = /^\d{2}[/-]\d{2}[/-]\d{4}/;
     const targetValue = e.target.value;
     const value = datePattern.exec(targetValue);
+    const selStart = e.target.selectionStart;
     if (value) {
       const isoDate = (new Date(value)).toISOString();
       changeHandler(isoDate);
     } else if (this.isSeparator(targetValue, 2) || this.isSeparator(targetValue, 5)) {
       e.target.value += '/';
+    } else if (targetValue.length === 3 && selStart === 2) {
+      e.target.setSelectionRange(3, 3);
     }
   }
 
