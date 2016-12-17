@@ -43,6 +43,8 @@ class DateInput extends Component {
       e.target.value += '/';
     } else if (targetValue.length === 3 && selStart === 2) {
       e.target.setSelectionRange(3, 3);
+    } else if (targetValue.length === 6 && selStart === 5) {
+      e.target.setSelectionRange(6, 6);
     }
   }
 
