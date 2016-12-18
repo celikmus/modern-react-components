@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import Keys from '../../utils/keys';
 import './DateInput.scss';
 
 const setTwoDigits = number => {
@@ -14,14 +13,6 @@ class DateInput extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
-  }
-
-  handleOnBlur() {
-
-  }
-
-  handleOnFocus(e) {
-
   }
 
   isSeparator(value, i) {
@@ -48,14 +39,6 @@ class DateInput extends Component {
     }
   }
 
-
-  componentWillReceiveProps(nextProps) {
-    // const {value} = this.props;
-    // if (nextProps.value !== value) {
-    //   // this.setState({value: nextProps.value});
-    // }
-  }
-
   formatDate(isoDate) {
     const date = new Date(isoDate);
     const day = setTwoDigits(date.getDate());
@@ -78,8 +61,6 @@ class DateInput extends Component {
           placeholder="dd/mm/yyyy"
           defaultValue={formattedValue}
           disabled={disabled}
-          onFocus={this.handleOnFocus}
-          onBlur={this.handleOnBlur}
           onChange={this.handleOnChange} />
         <button className="date-input__calendar-button" disabled={disabled}>
           <i className="fa fa-calendar"></i>
