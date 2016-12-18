@@ -11,8 +11,8 @@ class DateInput extends Component {
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleOnFocus = this.handleOnFocus.bind(this);
-    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.handleOnClickButton = this.handleOnClickButton.bind(this);
+    this.renderCalendar = this.renderCalendar.bind(this);
   }
 
   isSeparator(value, i) {
@@ -39,6 +39,10 @@ class DateInput extends Component {
     }
   }
 
+  handleOnClickButton() {
+
+  }
+
   formatDate(isoDate) {
     const date = new Date(isoDate);
     const day = setTwoDigits(date.getDate());
@@ -47,24 +51,32 @@ class DateInput extends Component {
     return `${day}/${month}/${year}`;
   }
 
+  renderCalendar() {
+
+  }
+
   render() {
     const {name, id, disabled, value} = this.props;
     const formattedValue = value && this.formatDate(value);
     return (
-      <div
-        className="date-input">
-        <input
-          id={id}
-          name={name}
-          ref={c => { if (c) { this.input = c; } }}
-          className="date-input__input"
-          placeholder="dd/mm/yyyy"
-          defaultValue={formattedValue}
-          disabled={disabled}
-          onChange={this.handleOnChange} />
-        <button className="date-input__calendar-button" disabled={disabled}>
-          <i className="fa fa-calendar"></i>
-        </button>
+      <div className="date-input">
+        <div className="date-input__controls">
+          <input
+            id={id}
+            name={name}
+            ref={c => { if (c) { this.input = c; } }}
+            className="date-input__input"
+            placeholder="dd/mm/yyyy"
+            defaultValue={formattedValue}
+            disabled={disabled}
+            onChange={this.handleOnChange} />
+          <button className="date-input__calendar-button" onClick={this.handleOnClickButton} disabled={disabled}>
+            <i className="fa fa-calendar"></i>
+          </button>
+        </div>
+        <div className="date-input__calendar">
+          {this.renderCalendar()}
+        </div>
       </div>
     );
   }

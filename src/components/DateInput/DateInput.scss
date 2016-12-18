@@ -2,6 +2,7 @@
 
 .date-input {
   font-size: 0.75rem;
+  width: 15.5em;
   position: relative;
   &__input {
     @extend .input;
@@ -17,5 +18,15 @@
     height: 1.85em;
     margin-left: 0.5em;
     padding: 0 0.4em;
+  }
+  &__calendar {
+    @include z-index(menu-panel);
+    position: absolute;
+    width: 100%;
+    margin-top: 1px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    max-height: 12em;
+    overflow: hidden;
   }
 }
