@@ -4,9 +4,17 @@
   font-size: 0.75rem;
   width: 15.5em;
   position: relative;
+  display: inline-block;
+  &--open {
+    .date-input__calendar {
+      transform: translateY(0);
+    }
+  }
   &__input {
     @extend .input;
+    @include z-index(menu);
     display: inline-block;
+    position: relative;
     padding: 0 0.4em;
     height: 2.25em;
     width: 14em;
@@ -14,33 +22,42 @@
   }
   &__calendar-button {
     @extend .button;
+    @include z-index(menu);
+    position: relative;
     vertical-align: middle;
-    height: 1.85em;
-    margin-left: 0.5em;
-    padding: 0 0.4em;
   }
   &__calendar {
-    @include z-index(menu-panel);
+    @include z-index(menu-underlay);
     position: absolute;
+    display: inline-block;
     width: 100%;
-    margin-top: 1px;
+    transform: translateY(-120%);
     background-color: transparent;
     border: 1px solid transparent;
-    max-height: 12em;
     overflow: hidden;
   }
   &__calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: $white;
+    border: $radius-control $radius-control 0 0;
   }
   &__header-month {
 
   }
   &__calendar-body {
-
+    border: 0 0 $radius-control $radius-control;
+    background-color: $white;
+    height: 12em;
   }
   &__month-nav {
     @extend .button;
+    outline: none;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $grey-lighter;
+    }
   }
 }

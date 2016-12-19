@@ -12,6 +12,9 @@ class DateInput extends Component {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClickButton = this.handleOnClickButton.bind(this);
+    this.state = {
+      isOpen: false
+    };
   }
 
   isSeparator(value, i) {
@@ -39,7 +42,10 @@ class DateInput extends Component {
   }
 
   handleOnClickButton() {
-
+    const {isOpen} = this.state;
+    this.setState({
+      isOpen: !isOpen
+    });
   }
 
   formatDate(isoDate) {
@@ -72,10 +78,11 @@ class DateInput extends Component {
   }
 
   render() {
+    const {isOpen} = this.state;
     const {name, id, disabled, value} = this.props;
     const formattedValue = value && this.formatDate(value);
     return (
-      <div className="date-input">
+      <div className={`date-input${isOpen ? ' date-input--open' : ''}`}>
         <div className="date-input__controls">
           <input
             id={id}
