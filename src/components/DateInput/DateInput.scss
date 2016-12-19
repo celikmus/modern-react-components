@@ -32,6 +32,7 @@
     display: inline-block;
     width: 100%;
     transform: translateY(-120%);
+    transition: all 0.2s ease-out;
     background-color: transparent;
     border: 1px solid transparent;
     overflow: hidden;
