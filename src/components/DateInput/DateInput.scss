@@ -29,4 +29,18 @@
     max-height: 12em;
     overflow: hidden;
   }
+  &__calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__header-month {
+
+  }
+  &__calendar-body {
+
+  }
+  &__month-nav {
+    @extend .button;
+  }
 }

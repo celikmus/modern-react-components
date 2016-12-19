@@ -12,7 +12,6 @@ class DateInput extends Component {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClickButton = this.handleOnClickButton.bind(this);
-    this.renderCalendar = this.renderCalendar.bind(this);
   }
 
   isSeparator(value, i) {
@@ -52,7 +51,24 @@ class DateInput extends Component {
   }
 
   renderCalendar() {
+    return (
+      <div className="date-input__calendar">
+        <div className="date-input__calendar-header">
+          <button className="date-input__month-nav">
+            <i className="fa fa-chevron-left" />
+          </button>
+          <div className="date-input__header-month">
+            December 2016
+          </div>
+          <button className="date-input__month-nav">
+            <i className="fa fa-chevron-right" />
+          </button>
+        </div>
+        <div className="date-input__calendar-body">
 
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -74,9 +90,7 @@ class DateInput extends Component {
             <i className="fa fa-calendar"></i>
           </button>
         </div>
-        <div className="date-input__calendar">
-          {this.renderCalendar()}
-        </div>
+        {this.renderCalendar()}
       </div>
     );
   }
