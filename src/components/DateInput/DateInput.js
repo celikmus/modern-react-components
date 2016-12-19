@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {months} from '../../utils/dates';
 import './DateInput.scss';
 
 const setTwoDigits = number => {
@@ -56,6 +57,21 @@ class DateInput extends Component {
     return `${day}/${month}/${year}`;
   }
 
+  getMonthHeader() {
+    const {month, year} = this.state;
+    return (
+      <span>{`${month} ${year}`}</span>
+    );
+  }
+
+  componentWillMount() {
+    const date = new Date();
+    this.setState({
+      day: date.getDate(),
+      month: months[date.getMonth()],
+      year: date.getFullYear()
+    });
+  }
   renderCalendar() {
     return (
       <div className="date-input__calendar">
@@ -64,7 +80,7 @@ class DateInput extends Component {
             <i className="fa fa-chevron-left" />
           </button>
           <div className="date-input__header-month">
-            December 2016
+            {this.getMonthHeader()}
           </div>
           <button className="date-input__month-nav">
             <i className="fa fa-chevron-right" />
