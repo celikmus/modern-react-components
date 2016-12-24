@@ -64,9 +64,38 @@ class DateInput extends Component {
     );
   }
 
+  layMonthDays() {
+    const {date} = this.state;
+    const monthDate = new Date(date.toISOString());
+    monthDate.setDate(1);
+    const hiddenDays = (new Array(monthDate.getDay())).fill(1);
+    const visibleDays = (new Array(7 - monthDate.getDay())).fill(1);
+    const fullWeek = [0, 1, 2, 3, 4, 5, 6];
+    return (
+      <div>
+        <div className="date-input__calendar-days">
+          {hiddenDays.map((d, i) => <div className="date-input__calendar-day hidden" key={i} />)}
+          {visibleDays.map((d, i) => <div className="date-input__calendar-day boxed" key={`v1${i}`} />)}
+        </div>
+        <div className="date-input__calendar-days">
+          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v2${i}`} />)}
+        </div>
+        <div className="date-input__calendar-days">
+          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v3${i}`} />)}
+        </div>
+        <div className="date-input__calendar-days">
+          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v4${i}`} />)}
+        </div>
+        <div className="date-input__calendar-days">
+          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v5${i}`} />)}
+        </div>
+      </div>
+    );
+  }
   componentWillMount() {
     const date = new Date();
     this.setState({
+      date,
       day: date.getDate(),
       month: months[date.getMonth()],
       year: date.getFullYear()
@@ -96,6 +125,7 @@ class DateInput extends Component {
             <div className="date-input__calendar-day">Fri</div>
             <div className="date-input__calendar-day">Sat</div>
           </div>
+          {this.layMonthDays()}
         </div>
       </div>
     );
