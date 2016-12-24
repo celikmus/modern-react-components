@@ -87,7 +87,15 @@ class DateInput extends Component {
           </button>
         </div>
         <div className="date-input__calendar-body">
-
+          <div className="date-input__calendar-days">
+            <div className="date-input__calendar-day">Sun</div>
+            <div className="date-input__calendar-day">Mon</div>
+            <div className="date-input__calendar-day">Tue</div>
+            <div className="date-input__calendar-day">Wed</div>
+            <div className="date-input__calendar-day">Thu</div>
+            <div className="date-input__calendar-day">Fri</div>
+            <div className="date-input__calendar-day">Sat</div>
+          </div>
         </div>
       </div>
     );

@@ -49,6 +49,20 @@
     background-color: $white;
     height: 12em;
   }
+  &__calendar-days {
+    display: flex;
+    padding: 0 0.1em;
+    width: 100%;
+  }
+  &__calendar-day {
+    font-size: 0.875em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25em;
+    height: 2.25em;
+    margin: 0.1em;
+  }
   &__month-nav {
     @extend .button;
     outline: none;
