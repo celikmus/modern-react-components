@@ -90,27 +90,17 @@ class DateInput extends Component {
       );
     }
     return [midRows, lastRow];
-    // <div className="date-input__calendar-days">
-    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v2${i}`} />)}
-    // </div>
-    // <div className="date-input__calendar-days">
-    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v3${i}`} />)}
-    // </div>
-    // <div className="date-input__calendar-days">
-    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v4${i}`} />)}
-    // </div>
-    // <div className="date-input__calendar-days">
-    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v5${i}`} />)}
-    // </div>
   }
 
   layMonthDays() {
-    const {date, month} = this.state;
+    const {date, month, year} = this.state;
     const monthDate = new Date(date.toISOString());
     monthDate.setDate(1);
     const hiddenDays = (new Array(monthDate.getDay())).fill(1);
     const visibleDays = (new Array(7 - monthDate.getDay())).fill(1);
-    const dayCount = months.filter(m => m.name === month)[0].dayCount;
+    let dayCount = months.filter(m => m.name === month)[0].dayCount;
+    const isLeapYear = year % 4;
+    dayCount = (month === 'February' && isLeapYear) ? dayCount + 1 : dayCount;
     const remainingDayCount = dayCount - visibleDays.length;
     const remainingDays = (new Array(remainingDayCount)).fill(1);
     return (
