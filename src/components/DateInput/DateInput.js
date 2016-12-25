@@ -64,31 +64,64 @@ class DateInput extends Component {
     );
   }
 
+  layRemainingDays(days, startingLabel) {
+    const fullWeek = [0, 1, 2, 3, 4, 5, 6];
+    const midWeekRows = [2, 3, 4];
+    const midRows = midWeekRows.map((mw, ri) => (
+      <div className="date-input__calendar-days" key={ri}>
+        {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`${ri}${i}`}>
+          {startingLabel + 7 * ri + i}
+        </button>)}
+      </div>
+    ));
+    days.splice(0, 3 * 7);
+    let lastRow = null;
+    if (days.length) {
+      const hiddenDayCount = days.length - 7;
+      const hiddenDays = (new Array(hiddenDayCount)).fill(1);
+      const dayLabel = startingLabel + 7 * 3;
+      lastRow = (
+        <div className="date-input__calendar-days" key="lr">
+          {days.map((d, i) => <button className="date-input__calendar-day boxed" key={`l${i}`}>
+            {dayLabel + i}
+          </button>)}
+          {hiddenDays.map((d, i) => <div className="date-input__calendar-day hidden" key={`v5${i}`} />) }
+        </div>
+      );
+    }
+    return [midRows, lastRow];
+    // <div className="date-input__calendar-days">
+    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v2${i}`} />)}
+    // </div>
+    // <div className="date-input__calendar-days">
+    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v3${i}`} />)}
+    // </div>
+    // <div className="date-input__calendar-days">
+    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v4${i}`} />)}
+    // </div>
+    // <div className="date-input__calendar-days">
+    //   {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v5${i}`} />)}
+    // </div>
+  }
+
   layMonthDays() {
-    const {date} = this.state;
+    const {date, month} = this.state;
     const monthDate = new Date(date.toISOString());
     monthDate.setDate(1);
     const hiddenDays = (new Array(monthDate.getDay())).fill(1);
     const visibleDays = (new Array(7 - monthDate.getDay())).fill(1);
-    const fullWeek = [0, 1, 2, 3, 4, 5, 6];
+    const dayCount = months.filter(m => m.name === month)[0].dayCount;
+    const remainingDayCount = dayCount - visibleDays.length;
+    const remainingDays = (new Array(remainingDayCount)).fill(1);
     return (
       <div>
         <div className="date-input__calendar-days">
           {hiddenDays.map((d, i) => <div className="date-input__calendar-day hidden" key={i} />)}
-          {visibleDays.map((d, i) => <button className="date-input__calendar-day boxed" key={`v1${i}`} />)}
+          {visibleDays.map((d, i) => <button className="date-input__calendar-day boxed" key={`v1${i}`} >
+            {i + 1}
+          </button>)}
         </div>
-        <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v2${i}`} />)}
-        </div>
-        <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v3${i}`} />)}
-        </div>
-        <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v4${i}`} />)}
-        </div>
-        <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v5${i}`} />)}
-        </div>
+        {this.layRemainingDays(remainingDays, visibleDays.length + 1)}
       </div>
     );
   }
@@ -97,7 +130,7 @@ class DateInput extends Component {
     this.setState({
       date,
       day: date.getDate(),
-      month: months[date.getMonth()],
+      month: months[date.getMonth()].name,
       year: date.getFullYear()
     });
   }
