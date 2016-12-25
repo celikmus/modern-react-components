@@ -99,7 +99,7 @@ class DateInput extends Component {
     const hiddenDays = (new Array(monthDate.getDay())).fill(1);
     const visibleDays = (new Array(7 - monthDate.getDay())).fill(1);
     let dayCount = months.filter(m => m.name === month)[0].dayCount;
-    const isLeapYear = year % 4;
+    const isLeapYear = !(year % 4);
     dayCount = (month === 'February' && isLeapYear) ? dayCount + 1 : dayCount;
     const remainingDayCount = dayCount - visibleDays.length;
     const remainingDays = (new Array(remainingDayCount)).fill(1);
