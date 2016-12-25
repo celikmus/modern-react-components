@@ -75,19 +75,19 @@ class DateInput extends Component {
       <div>
         <div className="date-input__calendar-days">
           {hiddenDays.map((d, i) => <div className="date-input__calendar-day hidden" key={i} />)}
-          {visibleDays.map((d, i) => <div className="date-input__calendar-day boxed" key={`v1${i}`} />)}
+          {visibleDays.map((d, i) => <button className="date-input__calendar-day boxed" key={`v1${i}`} />)}
         </div>
         <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v2${i}`} />)}
+          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v2${i}`} />)}
         </div>
         <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v3${i}`} />)}
+          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v3${i}`} />)}
         </div>
         <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v4${i}`} />)}
+          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v4${i}`} />)}
         </div>
         <div className="date-input__calendar-days">
-          {fullWeek.map((d, i) => <div className="date-input__calendar-day boxed" key={`v5${i}`} />)}
+          {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`v5${i}`} />)}
         </div>
       </div>
     );

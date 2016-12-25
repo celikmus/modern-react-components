@@ -66,7 +66,13 @@
       visibility: hidden;
     }
     &.boxed {
-      outline: 1px solid $grey-lighter;
+      @extend .button;
+      border: 1px solid $grey-lighter;
+      border-radius: $radius-control;
+    }
+    &:focus {
+      outline: none;
+      border-color: $grey-dark;
     }
   }
   &__month-nav {
