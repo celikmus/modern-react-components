@@ -69,6 +69,11 @@
       @extend .button;
       border: 1px solid $grey-lighter;
       border-radius: $radius-control;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: $grey-light;
+      }
     }
     &:focus {
       outline: none;
