@@ -13,6 +13,8 @@ class DateInput extends Component {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClickButton = this.handleOnClickButton.bind(this);
+    this.handleOnClickPrev = this.handleOnClickPrev.bind(this);
+    this.handleOnClickNext = this.handleOnClickNext.bind(this);
     this.state = {
       isOpen: false
     };
@@ -49,6 +51,31 @@ class DateInput extends Component {
     });
   }
 
+  handleOnClickNext() {
+
+  }
+
+  handleOnClickPrev(e) {
+    e.stopPropagation();
+    const {year, date} = this.state;
+    const monthIndex = date.getMonth();
+    let newMonthIndex = monthIndex - 1;
+    const newDate = new Date(date.toISOString());
+    newDate.setMonth(newMonthIndex);
+    let newYear = year;
+    if (!monthIndex) {
+      newYear = year - 1;
+      newMonthIndex = 11;
+      newDate.setMonth(newMonthIndex);
+      newDate.setFullYear(newYear);
+    }
+    this.setState({
+      year: newYear,
+      month: months[newMonthIndex].name,
+      date: newDate
+    });
+  }
+
   formatDate(isoDate) {
     const date = new Date(isoDate);
     const day = setTwoDigits(date.getDate());
@@ -66,7 +93,8 @@ class DateInput extends Component {
 
   layRemainingDays(days, startingLabel) {
     const fullWeek = [0, 1, 2, 3, 4, 5, 6];
-    const midWeekRows = [2, 3, 4];
+    const rowCount = (days.length / 7 > 4) ? 4 : 3;
+    const midWeekRows = (new Array(rowCount)).fill(1);
     const midRows = midWeekRows.map((mw, ri) => (
       <div className="date-input__calendar-days" key={ri}>
         {fullWeek.map((d, i) => <button className="date-input__calendar-day boxed" key={`${ri}${i}`}>
@@ -74,12 +102,12 @@ class DateInput extends Component {
         </button>)}
       </div>
     ));
-    days.splice(0, 3 * 7);
+    days.splice(0, rowCount * 7);
     let lastRow = null;
     if (days.length) {
-      const hiddenDayCount = days.length - 7;
+      const hiddenDayCount = 7 - days.length;
       const hiddenDays = (new Array(hiddenDayCount)).fill(1);
-      const dayLabel = startingLabel + 7 * 3;
+      const dayLabel = startingLabel + 7 * rowCount;
       lastRow = (
         <div className="date-input__calendar-days" key="lr">
           {days.map((d, i) => <button className="date-input__calendar-day boxed" key={`l${i}`}>
@@ -128,13 +156,13 @@ class DateInput extends Component {
     return (
       <div className="date-input__calendar">
         <div className="date-input__calendar-header">
-          <button className="date-input__month-nav">
+          <button className="date-input__month-nav" onClick={this.handleOnClickPrev}>
             <i className="fa fa-chevron-left" />
           </button>
           <div className="date-input__header-month">
             {this.getMonthHeader()}
           </div>
-          <button className="date-input__month-nav">
+          <button className="date-input__month-nav" onClick={this.handleOnClickNext}>
             <i className="fa fa-chevron-right" />
           </button>
         </div>
