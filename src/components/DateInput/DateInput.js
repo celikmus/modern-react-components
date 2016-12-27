@@ -49,8 +49,22 @@ class DateInput extends Component {
     this.setState({isOpen: !isOpen});
   }
 
-  handleOnClickNext() {
-
+  handleOnClickNext(e) {
+    e.stopPropagation();
+    const {date} = this.state;
+    const year = date.getFullYear();
+    const monthIndex = date.getMonth();
+    let newMonthIndex = monthIndex + 1;
+    const newDate = new Date(date.toISOString());
+    newDate.setMonth(newMonthIndex);
+    let newYear = year;
+    if (monthIndex > 11) {
+      newYear = year + 1;
+      newMonthIndex = 0;
+      newDate.setMonth(newMonthIndex);
+      newDate.setFullYear(newYear);
+    }
+    this.setState({date: newDate});
   }
 
   handleOnClickPrev(e) {
