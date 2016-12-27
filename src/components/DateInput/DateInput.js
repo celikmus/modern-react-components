@@ -46,9 +46,7 @@ class DateInput extends Component {
 
   handleOnClickButton() {
     const {isOpen} = this.state;
-    this.setState({
-      isOpen: !isOpen
-    });
+    this.setState({isOpen: !isOpen});
   }
 
   handleOnClickNext() {
@@ -57,7 +55,8 @@ class DateInput extends Component {
 
   handleOnClickPrev(e) {
     e.stopPropagation();
-    const {year, date} = this.state;
+    const {date} = this.state;
+    const year = date.getFullYear();
     const monthIndex = date.getMonth();
     let newMonthIndex = monthIndex - 1;
     const newDate = new Date(date.toISOString());
@@ -69,11 +68,7 @@ class DateInput extends Component {
       newDate.setMonth(newMonthIndex);
       newDate.setFullYear(newYear);
     }
-    this.setState({
-      year: newYear,
-      month: months[newMonthIndex].name,
-      date: newDate
-    });
+    this.setState({date: newDate});
   }
 
   formatDate(isoDate) {
@@ -85,7 +80,9 @@ class DateInput extends Component {
   }
 
   getMonthHeader() {
-    const {month, year} = this.state;
+    const {date} = this.state;
+    const month = months[date.getMonth()].name;
+    const year = date.getFullYear();
     return (
       <span>{`${month} ${year}`}</span>
     );
@@ -121,7 +118,9 @@ class DateInput extends Component {
   }
 
   layMonthDays() {
-    const {date, month, year} = this.state;
+    const {date} = this.state;
+    const month = months[date.getMonth()].name;
+    const year = date.getFullYear();
     const monthDate = new Date(date.toISOString());
     monthDate.setDate(1);
     const hiddenDays = (new Array(monthDate.getDay())).fill(1);
@@ -143,15 +142,12 @@ class DateInput extends Component {
       </div>
     );
   }
+
   componentWillMount() {
     const date = new Date();
-    this.setState({
-      date,
-      day: date.getDate(),
-      month: months[date.getMonth()].name,
-      year: date.getFullYear()
-    });
+    this.setState({date});
   }
+
   renderCalendar() {
     return (
       <div className="date-input__calendar">
