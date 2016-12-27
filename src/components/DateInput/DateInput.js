@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import OutsideClick from '../common/OutsideClick/OutsideClick';
 import {months} from '../../utils/dates';
 import './DateInput.scss';
 
@@ -15,6 +16,8 @@ class DateInput extends Component {
     this.handleOnClickButton = this.handleOnClickButton.bind(this);
     this.handleOnClickPrev = this.handleOnClickPrev.bind(this);
     this.handleOnClickNext = this.handleOnClickNext.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleOnBlurButton = this.handleOnBlurButton.bind(this);
     this.state = {
       isOpen: false
     };
@@ -47,6 +50,12 @@ class DateInput extends Component {
   handleOnClickButton() {
     const {isOpen} = this.state;
     this.setState({isOpen: !isOpen});
+  }
+
+  handleOnBlurButton(e) {
+    const relatedTarget = e.relatedTarget;
+    const isBlurringOut = relatedTarget && !relatedTarget.classList.contains('date-input__calendar-day');
+    isBlurringOut && this.handleOutsideClick();
   }
 
   handleOnClickNext(e) {
@@ -83,6 +92,11 @@ class DateInput extends Component {
       newDate.setFullYear(newYear);
     }
     this.setState({date: newDate});
+  }
+
+  handleOutsideClick() {
+    const {isOpen} = this.state;
+    isOpen && this.setState({isOpen: false});
   }
 
   formatDate(isoDate) {
@@ -197,23 +211,29 @@ class DateInput extends Component {
     const {name, id, disabled, value} = this.props;
     const formattedValue = value && this.formatDate(value);
     return (
-      <div className={`date-input${isOpen ? ' date-input--open' : ''}`}>
-        <div className="date-input__controls">
-          <input
-            id={id}
-            name={name}
-            ref={c => { if (c) { this.input = c; } }}
-            className="date-input__input"
-            placeholder="dd/mm/yyyy"
-            defaultValue={formattedValue}
-            disabled={disabled}
-            onChange={this.handleOnChange} />
-          <button className="date-input__calendar-button" onClick={this.handleOnClickButton} disabled={disabled}>
-            <i className="fa fa-calendar"></i>
-          </button>
+      <OutsideClick className="date-input__outside-click" onClick={this.handleOutsideClick}>
+        <div className={`date-input${isOpen ? ' date-input--open' : ''}`}>
+          <div className="date-input__controls">
+            <input
+              id={id}
+              name={name}
+              ref={c => { if (c) { this.input = c; } }}
+              className="date-input__input"
+              placeholder="dd/mm/yyyy"
+              defaultValue={formattedValue}
+              disabled={disabled}
+              onChange={this.handleOnChange} />
+            <button
+              className="date-input__calendar-button"
+              onClick={this.handleOnClickButton}
+              onBlur={this.handleOnBlurButton}
+              disabled={disabled}>
+              <i className="fa fa-calendar"></i>
+            </button>
+          </div>
+          {this.renderCalendar()}
         </div>
-        {this.renderCalendar()}
-      </div>
+      </OutsideClick>
     );
   }
 }
