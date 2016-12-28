@@ -4,10 +4,11 @@
   font-size: 0.75rem;
   width: 15.5em;
   position: relative;
-  display: inline-block;
   &--open {
     .date-input__calendar {
       transform: translateY(0);
+      visibility: visible;
+      opacity: 1;
     }
   }
   &__outside-click {
@@ -35,11 +36,12 @@
     position: absolute;
     display: inline-block;
     width: 100%;
-    transform: translateY(-120%);
-    transition: all 0.2s ease-out;
     background-color: transparent;
     border: 1px solid transparent;
-    overflow: hidden;
+    visibility: hidden;
+    opacity: 0.2;
+    transform: translateY(-2.25em);
+    transition: all 0.2s ease-out;
   }
   &__calendar-header {
     display: flex;
