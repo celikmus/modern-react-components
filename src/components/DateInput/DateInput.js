@@ -54,7 +54,8 @@ class DateInput extends Component {
 
   handleOnBlurButton(e) {
     const relatedTarget = e.relatedTarget;
-    const isBlurringOut = relatedTarget && !relatedTarget.classList.contains('date-input__calendar-day');
+    const isBlurringOut = relatedTarget && (!relatedTarget.classList.contains('date-input__calendar-day') &&
+                                            !relatedTarget.classList.contains('date-input__month-nav'));
     isBlurringOut && this.handleOutsideClick();
   }
 
