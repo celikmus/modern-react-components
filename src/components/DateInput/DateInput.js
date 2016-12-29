@@ -102,6 +102,7 @@ class DateInput extends Component {
     const day = e.target.textContent;
     date.setDate(day);
     this.setState({date});
+    this.input.value = this.formatDate(date.toISOString());
   }
   handleOutsideClick() {
     const {isOpen} = this.state;
@@ -181,7 +182,8 @@ class DateInput extends Component {
   }
 
   componentWillMount() {
-    const date = new Date();
+    const propValue = this.props.value;
+    const date = propValue ? new Date(propValue) : new Date();
     this.setState({date});
   }
 
@@ -216,9 +218,9 @@ class DateInput extends Component {
   }
 
   render() {
-    const {isOpen} = this.state;
-    const {name, id, disabled, value} = this.props;
-    const formattedValue = value && this.formatDate(value);
+    const {isOpen, date} = this.state;
+    const {name, id, disabled} = this.props;
+    const formattedDate = this.formatDate(date.toISOString());
     return (
       <OutsideClick className="date-input__outside-click" onClick={this.handleOutsideClick}>
         <div className={`date-input${isOpen ? ' date-input--open' : ''}`}>
@@ -229,7 +231,7 @@ class DateInput extends Component {
               ref={c => { if (c) { this.input = c; } }}
               className="date-input__input"
               placeholder="dd/mm/yyyy"
-              defaultValue={formattedValue}
+              defaultValue={formattedDate}
               disabled={disabled}
               onChange={this.handleOnChange} />
             <button
