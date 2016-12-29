@@ -18,6 +18,7 @@ class DateInput extends Component {
     this.handleOnClickNext = this.handleOnClickNext.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleOnBlurButton = this.handleOnBlurButton.bind(this);
+    this.handleOnClickDay = this.handleOnClickDay.bind(this);
     this.state = {
       isOpen: false
     };
@@ -95,6 +96,13 @@ class DateInput extends Component {
     this.setState({date: newDate});
   }
 
+  handleOnClickDay(e) {
+    e.stopPropagation();
+    const {date} = this.state;
+    const day = e.target.textContent;
+    date.setDate(day);
+    this.setState({date});
+  }
   handleOutsideClick() {
     const {isOpen} = this.state;
     isOpen && this.setState({isOpen: false});
@@ -160,7 +168,7 @@ class DateInput extends Component {
     const remainingDayCount = dayCount - visibleDays.length;
     const remainingDays = (new Array(remainingDayCount)).fill(1);
     return (
-      <div>
+      <div onClick={this.handleOnClickDay}>
         <div className="date-input__calendar-days">
           {hiddenDays.map((d, i) => <div className="date-input__calendar-day hidden" key={i} />)}
           {visibleDays.map((d, i) => <button className="date-input__calendar-day boxed" key={`v1${i}`} >
