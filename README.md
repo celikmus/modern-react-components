@@ -3,3 +3,4 @@ Flexbox & SCSS based React components
 
 - Button
 - FilteringSelect
+- DateInput
