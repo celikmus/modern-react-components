@@ -103,6 +103,9 @@ class DateInput extends Component {
     date.setDate(day);
     this.setState({date});
     this.input.value = this.formatDate(date.toISOString());
+    const isoDate = date.toISOString();
+    this.props.changeHandler(isoDate);
+    this.handleOutsideClick();
   }
   handleOutsideClick() {
     const {isOpen} = this.state;
