@@ -10,7 +10,7 @@
   "author": "Mustafa Celik <celikmus@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "normalizr": "^2.2.1",
+    "normalizr": "^3.0.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-redux": "^5.0.1",
