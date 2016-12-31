@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import './TabContainer.scss';
 
-const TabContainer = () => {
-  const renderHeader = () => `hello header`;
-  const renderContent = () => `hello content`;
+const TabContainer = ({children, changeHandler, activeTab}) => {
+  const activeTabName = activeTab || children[0].props.name;
+
+  const renderHeader = () => children.map((child, i) => child.props.name);
+  const renderContent = () => {
+    const content = children.filter(child => child.props.name === activeTabName)[0];
+    return content;
+  };
   return (
     <div className="tab-container">
       <div className="tab-container__header">
@@ -16,6 +21,10 @@ const TabContainer = () => {
   );
 };
 
-TabContainer.propTypes = {};
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  changeHandler: PropTypes.func.isRequired,
+  activeTab: PropTypes.string
+};
 
 export default TabContainer;
