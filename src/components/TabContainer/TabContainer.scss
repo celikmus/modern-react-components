@@ -1,5 +1,49 @@
 @import "../styles/main";
 
+#main {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
 .tab-container {
+  font-size: 1rem;
   display: block;
+  width: 100%;
+  background-color: $grey-light;
+  position: relative;
+  &__header {
+    display: flex;
+  }
+  &__tab {
+    @extend .button;
+    font-size: 0.875em;
+    border-radius: 0;
+    color: $grey-darker;
+    padding: 0 1em;
+    height: 3.1em;
+    &.active {
+      @include z-index(content-overlay);
+      border: 1px solid transparent;
+      border-bottom: none;
+      background-color: $grey-lighter;
+      border-radius: $radius-rounded $radius-rounded 0 0;
+      color: $red;
+    }
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+  &__content {
+    background-color: $grey-light;
+    position: absolute;
+    top: 2.1em;
+    width: 100%;
+    height: calc(100% - 2.1em);
+    border: 1px solid $grey-light;
+    border-radius: 0 $radius-control $radius-control $radius-control;
+  }
 }
