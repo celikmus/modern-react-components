@@ -5,6 +5,7 @@ import Button from './components/Button/Button';
 import FilteringSelect from './components/FilteringSelect/FilteringSelect';
 import filteringSelectOptions from './store/filteringSelectOptions';
 import DateInput from './components/DateInput/DateInput';
+import TabContainer from './components/TabContainer/TabContainer';
 
 export default (
   <Route path="/" component={App}>
@@ -27,5 +28,10 @@ export default (
             changeHandler={val => { console.log(`testDate value: ${val}`); }} />
         );
       }} />
+    <Route
+      path="tabContainer" key="4" component={() => <TabContainer changeHandler={val => { console.log(`tabContainer content: ${val}`); }}>
+        <div name="tab1">Tab1</div>
+        <div name="tab2">Tab2</div>
+      </TabContainer>} />
   </Route>
 );
