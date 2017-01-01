@@ -12,6 +12,7 @@
   font-size: 1rem;
   display: block;
   width: 100%;
+  min-height: 10em;
   background-color: $grey-light;
   position: relative;
   &__header {
@@ -38,12 +39,12 @@
     }
   }
   &__content {
-    background-color: $grey-light;
+    background-color: $grey-lighter;
     position: absolute;
-    top: 2.1em;
+    top: 2.6em;
     width: 100%;
     height: calc(100% - 2.1em);
-    border: 1px solid $grey-light;
+    border: 1px solid $grey-lighter;
     border-radius: 0 $radius-control $radius-control $radius-control;
   }
 }
