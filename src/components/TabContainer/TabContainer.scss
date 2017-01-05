@@ -10,11 +10,10 @@
 
 .tab-container {
   font-size: 1rem;
-  display: block;
   width: 100%;
-  min-height: 10em;
   background-color: $grey-light;
   position: relative;
+  overflow: hidden;
   &__header {
     display: flex;
   }
@@ -40,11 +39,16 @@
   }
   &__content {
     background-color: $grey-lighter;
-    position: absolute;
     top: 2.6em;
+    bottom: 0;
     width: 100%;
-    height: calc(100% - 2.1em);
     border: 1px solid $grey-lighter;
     border-radius: 0 $radius-control $radius-control $radius-control;
+    & > * {
+      height: 100%;
+      width: 100%;
+      display: inline-block;
+      position: relative;
+    }
   }
 }
