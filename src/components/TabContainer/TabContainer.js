@@ -36,9 +36,9 @@ class TabContainer extends Component {
 
   render() {
     const {activeTabName} = this.state;
-    const {children} = this.props;
+    const {children, styles} = this.props;
     return (
-      <div className="tab-container">
+      <div className="tab-container" style={styles}>
         <div className="tab-container__header">
           {this.renderHeader(activeTabName, children)}
         </div>
@@ -53,7 +53,8 @@ class TabContainer extends Component {
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
   changeHandler: PropTypes.func.isRequired,
-  activeTab: PropTypes.string
+  activeTab: PropTypes.string,
+  styles: PropTypes.object
 };
 
 export default TabContainer;
