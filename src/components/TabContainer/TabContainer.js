@@ -6,7 +6,7 @@ class TabContainer extends Component {
     super(props);
     this.handleOnClickTab = this.handleOnClickTab.bind(this);
     this.state = {
-      activeTabName: props.activeTab || props.children[0].name
+      activeTabName: props.activeTab || props.children[0].props.name
     };
   }
 
