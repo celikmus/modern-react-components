@@ -24,18 +24,25 @@ function OpenPlugin() {
 module.exports = {
   entry: {
     app: path.resolve(PATHS.client, 'index.js'),
-    vendor: ['react', 'react-dom', 'redux', 'react-redux', 'react-router', 'babel-polyfill']
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-redux',
+      'react-router',
+      'babel-polyfill'
+    ]
   },
 
   output: {
     filename: '[name].js',
     path: PATHS.build,
-    publicPath: '/assets/'
+    publicPath: '/assets/',
+    pathinfo: true
   },
 
   cache: true,
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
 
   stats: {
     colors: true,
@@ -43,32 +50,71 @@ module.exports = {
   },
 
   module: {
-    preloaders: [{
-      test: /\.js$/,
-      include: PATHS.client,
-      loader: 'eslint'
-    }],
-    loaders: [{
-      test: /\.(js|jsx)$/,
-      include: PATHS.client,
-      loader: 'babel'
-    }, {
-      test: /\.scss/,
-      loader: 'style!css?sourceMap!postcss!sass?outputStyle=expanded'
-    }, {
-      test: /\.(png|jpg|woff|woff2|ttf|svg|eot|gif)$/,
-      loader: 'url?limit=8192'
-    }, {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url?limit=10000&mimetype=application/font-woff'
-    }, {
-      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file'
-    }]
+    rules: [
+      // {
+      //   test: /\.js$/,
+      //   include: PATHS.client,
+      //   enforce: 'pre',
+      //   use: 'eslint-loader'
+      // },
+      {
+        test: /\.(js|jsx)$/,
+        include: PATHS.client,
+        use: {
+          loader: 'babel-loader',
+          options: { cacheDirectory: true }
+        }
+      },
+      {
+        test: /\.scss/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader?sourceMap'
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader?outputStyle=expanded',
+            options: {
+              data: `$staticServer: 'http://localhost:${serverConfig.development
+                .devServerPort}';`
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|woff|woff2|ttf|svg|eot|gif)$/,
+        use: 'url-loader?limit=8192'
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'file-loader'
+      }
+    ]
   },
-  postcss: () => [autoprefixer],
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.LoaderOptionsPlugin({
+      debug: true,
+      options: {
+        postcss: [
+          autoprefixer({
+            browsers: ['>1%', 'last 2 versions', 'not ie < 11']
+          })
+        ]
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.bundle.js'
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
@@ -78,9 +124,6 @@ module.exports = {
     }),
     new OpenPlugin()
   ],
-  sassLoader: {
-    data: `$staticServer: 'http://localhost:${serverConfig.development.devServerPort}';`
-  },
   devServer: {
     contentBase: path.resolve(__dirname, 'src'),
     port: serverConfig.development.devServerPort,
@@ -93,5 +136,4 @@ module.exports = {
       }
     ]
   }
-
 };
