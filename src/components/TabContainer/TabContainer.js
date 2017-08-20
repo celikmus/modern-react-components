@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import './TabContainer.scss';
 
 class TabContainer extends Component {
@@ -13,30 +13,35 @@ class TabContainer extends Component {
   handleOnClickTab(e) {
     e.stopPropagation();
     const activeTabName = e.target.name;
-    this.setState({activeTabName});
+    this.setState({ activeTabName });
     this.props.changeHandler(activeTabName);
   }
 
   renderHeader(activeTabName, children = []) {
-    return (
-      children.map((child, i) => <button
-        className={`tab-container__tab${(activeTabName === child.props.name) ? ' active' : ''}`}
+    return children.map((child, i) =>
+      <button
+        className={`tab-container__tab${activeTabName === child.props.name
+          ? ' active'
+          : ''}`}
         name={child.props.name}
         key={i}
-        onClick={this.handleOnClickTab}>
+        onClick={this.handleOnClickTab}
+      >
         {child.props.name}
       </button>
-    ));
+    );
   }
 
   renderContent(activeTabName, children = []) {
-    const content = children.filter(child => child.props.name === activeTabName)[0];
+    const content = children.filter(
+      child => child.props.name === activeTabName
+    )[0];
     return content;
   }
 
   render() {
-    const {activeTabName} = this.state;
-    const {children, styles} = this.props;
+    const { activeTabName } = this.state;
+    const { children, styles } = this.props;
     return (
       <div className="tab-container" style={styles}>
         <div className="tab-container__header">

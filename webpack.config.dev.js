@@ -51,12 +51,12 @@ module.exports = {
 
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   include: PATHS.client,
-      //   enforce: 'pre',
-      //   use: 'eslint-loader'
-      // },
+      {
+        test: /\.js$/,
+        include: PATHS.client,
+        enforce: 'pre',
+        use: 'eslint-loader'
+      },
       {
         test: /\.(js|jsx)$/,
         include: PATHS.client,

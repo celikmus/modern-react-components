@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class App extends Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node.isRequired
 };
 
 export default App;

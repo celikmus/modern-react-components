@@ -1,7 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class OutsideClick extends Component {
-
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -16,7 +15,7 @@ class OutsideClick extends Component {
 
   handleClick(e) {
     const outside = this.outside;
-    const {onClick, id} = this.props;
+    const { onClick, id } = this.props;
     // clicked outside
     if (!outside.contains(e.target)) {
       onClick(e, id);
@@ -24,13 +23,11 @@ class OutsideClick extends Component {
   }
 
   render() {
-    const ref = c => (this.outside = c);
-    const {tag, className, children} = this.props;
-    return React.createElement(
-      tag || 'div',
-      {className, ref},
-      children
-    );
+    const ref = c => {
+      this.outside = c;
+    };
+    const { tag, className, children } = this.props;
+    return React.createElement(tag || 'div', { className, ref }, children);
   }
 }
 
