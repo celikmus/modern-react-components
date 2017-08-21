@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "normalizr": "^3.0.0",
+    "prop-types": "^15.5.10",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-redux": "^5.0.1",
@@ -81,11 +82,17 @@
   },
   "jest": {
     "verbose": true,
-    "moduleFileExtensions": ["jsx", "js", "json"],
+    "moduleFileExtensions": [
+      "jsx",
+      "js",
+      "json"
+    ],
     "moduleNameMapper": {
       "\\.(css|scss)$": "<rootDir>/mocks/CSSstub.js"
     },
-    "testPathIgnorePatterns": ["./(build|docs|node_modules)/"],
+    "testPathIgnorePatterns": [
+      "./(build|docs|node_modules)/"
+    ],
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$"
   }
