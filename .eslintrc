@@ -58,9 +58,7 @@
     "arrow-parens": ["error", "as-needed"],
     "jsx-a11y/no-static-element-interactions": 0,
     "react/forbid-prop-types": 0,
-    "jsx-a11y/anchor-has-content": [2, {
-      "components": [""]
-    }],
+    "jsx-a11y/anchor-has-content": 0,
     "class-methods-use-this": 0,
     "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
     "no-restricted-properties": [0, { "object": "Math", "property": "pow"}],
