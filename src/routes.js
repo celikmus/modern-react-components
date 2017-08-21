@@ -6,6 +6,7 @@ import FilteringSelect from './components/FilteringSelect/FilteringSelect';
 import filteringSelectOptions from './store/filteringSelectOptions';
 import DateInput from './components/DateInput/DateInput';
 import TabContainer from './components/TabContainer/TabContainer';
+import CardCollection from './components/CardCollection';
 
 export default (
   <Route path="/" component={App}>
@@ -50,6 +51,16 @@ export default (
           <div name="tab1">Tab1</div>
           <div name="tab2">Tab2</div>
         </TabContainer>}
+    />
+    <Route
+      path="cardCollection"
+      key="5"
+      component={() =>
+        <CardCollection>
+          <div>First card</div>
+          <div>Second card</div>
+          <div>Third card</div>
+        </CardCollection>}
     />
   </Route>
 );
