@@ -14,12 +14,15 @@ class CardCollection extends Component {
   handleOnClickCard() {}
 
   render() {
-    const { children } = this.props;
+    const { children, width, height } = this.props;
     const { currentIndex } = this.state;
     return (
-      <ul className="card-collection">
+      <ul
+        className="card-collection"
+        style={{ width: `${width || 300}px`, height: `${height || 200}px` }}
+      >
         {children.map((child, i) => {
-          const style = `card__${i}`;
+          const style = `card card__${i}`;
           const cardStyle =
             currentIndex === i ? `${style} card--current` : style;
           return (
@@ -34,7 +37,9 @@ class CardCollection extends Component {
 }
 
 CardCollection.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  width: PropTypes.number,
+  height: PropTypes.number
 };
 
 export default CardCollection;
